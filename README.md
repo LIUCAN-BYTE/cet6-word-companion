@@ -1,6 +1,6 @@
 # 六级单词助手
 
-一个面向 iPad 和手机浏览器的 CET-6 词汇 PWA：复制单词后打开页面即可尝试读取剪贴板，也可以手动输入；查词结果和当天单词保存在当前浏览器，并可生成当天例句和六级阅读。
+一个面向安卓平板和手机的 CET-6 词汇 PWA：复制单词后打开页面即可尝试读取剪贴板，也可以手动输入；查词结果和当天单词保存在当前浏览器，并可生成当天例句和六级阅读。
 
 ## 本地运行
 
@@ -28,6 +28,16 @@ APP_PASSWORD=设置一个访问网页的密码
 
 API Key 只由服务端读取，不能写进前端代码，也不要提交到 Git。`APP_PASSWORD` 设置后，打开网页会出现浏览器登录框；`APP_USERNAME` 默认是 `student`。`npm run check-config` 可以检查配置是否存在，但不会打印密钥。
 
+
+## PWA 安装与部署检查
+
+图标由 `assets/source-icon.jpg` 生成到 `public/icons/`。替换原图后运行 `npm run icons`，会重新生成 192、512、maskable 三种图标。构建产物会包含 manifest、service worker 和全部图标。
+
+必须在 HTTPS 下访问（localhost 除外），否则 service worker 和剪贴板 API 都不可用。部署后：
+
+- Android / Chrome：菜单选择“安装应用”或“添加到主屏幕”，即可全屏打开并离线使用已有页面。
+- 平板横屏、手机竖屏都可用，界面会自适应宽度。
+
 ## 部署到云平台
 
 使用 Render、Railway 等 Node.js 云平台时，配置：
@@ -38,7 +48,7 @@ API Key 只由服务端读取，不能写进前端代码，也不要提交到 Gi
 
 健康检查地址为 `/api/health`，不需要登录；其他页面和 API 会要求 `APP_USERNAME` 与 `APP_PASSWORD`。
 
-部署完成后使用平台提供的 HTTPS 地址访问，并把网页添加到手机或 iPad 主屏幕。公开部署必须设置 `APP_PASSWORD`，否则任何拿到网址的人都可能调用你的 API 余额。
+部署完成后使用平台提供的 HTTPS 地址访问，并在安卓平板或手机的 Chrome 菜单里选择“安装应用”。公开部署必须设置 `APP_PASSWORD`，否则任何拿到网址的人都可能调用你的 API 余额。
 
 ## 功能
 
