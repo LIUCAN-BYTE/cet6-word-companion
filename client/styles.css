@@ -57,3 +57,10 @@ button:disabled { opacity: .48; cursor: not-allowed; }
 .settings { line-height: 1.8; }
 footer { padding: 20px 2px 0; text-align: center; }
 @media (min-width: 700px) { .app-shell { padding: 42px 28px 52px; } .hero-card { padding: 30px; } }
+.history-day { padding: 17px 18px; }
+.history-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+.history-head strong { display: block; color: #174b50; font-size: 1.08rem; }
+.history-head small { display: block; margin-top: 3px; color: #7b8d8c; font-size: .78rem; }
+.history-meta { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+.review-badge { padding: 5px 9px; border-radius: 20px; color: #8a4b1f; background: #fdebdc; font-size: .78rem; font-weight: 750; }
+.history-row { padding: 12px 14px; border-radius: 13px; box-shadow: none; }

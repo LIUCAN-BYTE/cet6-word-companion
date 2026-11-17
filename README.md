@@ -22,11 +22,11 @@ DEEPSEEK_API_KEY=你的 DeepSeek 官方 API Key
 DEEPSEEK_BASE_URL=https://api.deepseek.com/chat/completions
 DEEPSEEK_MODEL=deepseek-flash
 PORT=3001
-APP_USERNAME=student
-APP_PASSWORD=设置一个访问网页的密码
 ```
 
-API Key 只由服务端读取，不能写进前端代码，也不要提交到 Git。`APP_PASSWORD` 设置后，打开网页会出现浏览器登录框；`APP_USERNAME` 默认是 `student`。`npm run check-config` 可以检查配置是否存在，但不会打印密钥。
+API Key 只由服务端读取，不能写进前端代码，也不要提交到 Git。`npm run check-config` 可以检查配置是否存在，但不会打印密钥。
+
+网页本身没有登录校验，适合个人在自己设备上使用。如果部署到公网，任何拿到网址的人都能调用你的 DeepSeek 余额，请不要把网址分享出去，或在云平台上开启访问限制。
 
 
 ## PWA 安装与部署检查
@@ -44,18 +44,18 @@ API Key 只由服务端读取，不能写进前端代码，也不要提交到 Gi
 
 - Build Command：`npm install && npm run build`
 - Start Command：`npm start`
-- Environment：设置 `DEEPSEEK_API_KEY`、`DEEPSEEK_BASE_URL`、`DEEPSEEK_MODEL`、`APP_USERNAME`、`APP_PASSWORD`
+- Environment：设置 `DEEPSEEK_API_KEY`、`DEEPSEEK_BASE_URL`、`DEEPSEEK_MODEL`
 
-健康检查地址为 `/api/health`，不需要登录；其他页面和 API 会要求 `APP_USERNAME` 与 `APP_PASSWORD`。
+健康检查地址为 `/api/health`。
 
-部署完成后使用平台提供的 HTTPS 地址访问，并在安卓平板或手机的 Chrome 菜单里选择“安装应用”。公开部署必须设置 `APP_PASSWORD`，否则任何拿到网址的人都可能调用你的 API 余额。
+部署完成后使用平台提供的 HTTPS 地址访问，并在安卓平板或手机的 Chrome 菜单里选择“安装应用”。网址等同于你的 API 使用权限，请只在自己的设备上使用。
 
 ## 功能
 
 - 剪贴板优先，手动输入回退
 - 可提供题目上下文，优先解释当前语境
 - 查询释义、词性、音标、六级搭配、例句和记忆提示
-- IndexedDB 本地保存当天查词记录
+- IndexedDB 本地保存全部查词记录，“历史”页按日期回看曾经查过的词和当时的释义
 - 根据当天查过的词生成例句和一篇六级阅读
 - 可添加到手机主屏幕作为 PWA 使用
 
