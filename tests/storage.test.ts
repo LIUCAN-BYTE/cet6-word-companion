@@ -22,7 +22,7 @@ describe('history grouping', () => {
     const days = groupWordsByDate([makeWord('early', d1a), makeWord('later', d1b), makeWord('next', d2)], [{ id: '2026-11-15', dateKey: '2026-11-15', wordIds: [], examples: [], reading: { title: '', body: '', translation: '', vocabulary: [] }, generatedAt: d1b }]);
     expect(days.map(d => d.dateKey)).toEqual(['2026-11-16', '2026-11-15']);
     expect(days[1].words.map(w => w.id)).toEqual(['later', 'early']);
-    expect(days[1].hasReview).toBe(true); expect(days[0].hasReview).toBe(false);
+    expect(days[1].review?.id).toBe('2026-11-15'); expect(days[0].review).toBeNull();
   });
   it('listHistory reads every stored word, not just today', async () => {
     await saveWord(makeWord('old', new Date(2024, 0, 1).toISOString())); await saveWord(makeWord('now', new Date().toISOString()));

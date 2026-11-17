@@ -18,7 +18,7 @@ router.post('/review', async (req, res) => {
   try {
     const input = reviewRequestSchema.parse(req.body);
     const content = await callDeepSeek([
-      { role: 'system', content: '你是 CET-6 阅读老师。只返回一个 JSON 对象，不要 Markdown。生成例句和一篇自然的六级难度阅读。字段必须为 dateKey, examples, reading；examples 是对象数组，每项包含 word, sentence, translation 三个字符串；reading 必须包含 title, body, translation, vocabulary；vocabulary 必须是对象数组，每项包含 word 和 note 两个字符串，若没有特别说明也要填写空字符串。' },
+      { role: 'system', content: '你是 CET-6 阅读老师。只返回一个 JSON 对象，不要 Markdown。生成例句和一篇自然的六级难度短文。短文 reading.body 严格控制在 110 到 130 个英文单词之间，只写一个段落，必须自然地用到每一个给定单词（允许变形），纯文本，不要 Markdown、不要加粗、不要换行。字段必须为 dateKey, examples, reading；examples 是对象数组，每项包含 word, sentence, translation 三个字符串；reading 必须包含 title, body, translation, vocabulary；vocabulary 必须是对象数组，每项包含 word 和 note 两个字符串，若没有特别说明也要填写空字符串。' },
       { role: 'user', content: JSON.stringify({ task: '覆盖所有单词并生成当天复习材料', ...input }) }
     ]);
     res.json(reviewPackSchema.parse(parseModelJson(content)));

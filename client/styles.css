@@ -64,3 +64,14 @@ footer { padding: 20px 2px 0; text-align: center; }
 .history-meta { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
 .review-badge { padding: 5px 9px; border-radius: 20px; color: #8a4b1f; background: #fdebdc; font-size: .78rem; font-weight: 750; }
 .history-row { padding: 12px 14px; border-radius: 13px; box-shadow: none; }
+.hl { color: #b4451f; font-weight: 800; background: #fff1e8; padding: 0 3px; border-radius: 4px; }
+.regen-banner { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 15px 18px; background: linear-gradient(135deg, #fff6ee, #fde9d8); border-color: #f3cdb4; }
+.regen-banner strong { display: block; color: #8a4b1f; }
+.regen-banner small { display: block; margin-top: 4px; color: #a46a45; word-break: break-word; }
+.regen-banner button, .review-intro button, .regen-row .ghost { border: 0; border-radius: 12px; padding: 11px 16px; font-weight: 750; white-space: nowrap; }
+.regen-banner button { color: #fff; background: #d86f42; }
+.regen-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 0 4px; }
+.ghost { background: transparent; color: #557174; border: 1px solid #ccdbd7 !important; }
+.ghost.back { padding: 7px 12px; margin-bottom: 10px; font-size: .86rem; }
+button.review-badge { border: 0; cursor: pointer; }
+@media (max-width: 520px) { .regen-banner { flex-direction: column; align-items: stretch; } }
