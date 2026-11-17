@@ -1,5 +1,5 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { parseModelJson, reviewPackSchema, wordRequestSchema, wordResultSchema } from '../server/validation';
+import { describeValidationError, parseModelJson, reviewPackSchema, wordRequestSchema, wordResultSchema } from '../server/validation';
 
 describe('server validation', () => {
   it('trims and bounds a word request', () => {
@@ -10,6 +10,27 @@ describe('server validation', () => {
   it('parses a valid model result', () => {
     const result = wordResultSchema.parse({ word: 'resilient', phonetic: '/rɪˈzɪliənt/', partOfSpeech: 'adj.', meanings: ['有韧性的'], contextMeaning: '坚韧的', collocations: ['resilient economy'], example: 'She is resilient.', memoryTip: 're + silent' });
     expect(result.word).toBe('resilient');
+  });
+
+  it('flattens object-shaped meanings and collocations into strings', () => {
+    const result = wordResultSchema.parse({
+      word: 'resilient', phonetic: '', partOfSpeech: 'adj.',
+      meanings: [{ pos: 'adj.', meaning: '有韧性的' }, { pos: 'adj.', meaning: '恢复快的' }],
+      contextMeaning: { meaning: '坚韧的' },
+      collocations: 'resilient economy',
+      example: 'She is resilient.', memoryTip: null
+    });
+    expect(result.meanings).toEqual(['adj. 有韧性的', 'adj. 恢复快的']);
+    expect(result.contextMeaning).toBe('坚韧的');
+    expect(result.collocations).toEqual(['resilient economy']);
+    expect(result.memoryTip).toBe('');
+  });
+
+  it('still rejects a result with no usable meanings and reports a friendly message', () => {
+    let caught: unknown;
+    try { wordResultSchema.parse({ word: 'x', partOfSpeech: 'n.', meanings: [], contextMeaning: '', example: '', memoryTip: '' }); } catch (error) { caught = error; }
+    expect(describeValidationError(caught, '查词失败')).toMatch(/meanings/);
+    expect(describeValidationError(new Error('DeepSeek 请求失败（429）'), '查词失败')).toBe('DeepSeek 请求失败（429）');
   });
 
   it('extracts fenced JSON and rejects malformed JSON', () => {
